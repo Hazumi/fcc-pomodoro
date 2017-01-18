@@ -7,10 +7,21 @@
   </head>
   <body>
 
-  <div id="timer">60</div>
-  <input id="duration" type="text">10</input>
+    <div id="timer"></div>
 
-  <script src="node_modules/timer.js/src/timer.js"></script>
-  <script src="js/main.min.js"></script>
+    <div id="wrapper">
+      <form id="input">
+        <label for="duration">Duration (mins)</label>
+        <input id="duration" type="text" size="6" maxlength="2" placeholder="40">
+        <label for="break">Break (mins)</label>
+        <input id="break" type="text" size="6" maxlength="2" placeholder="5">
+      </form>
+      <div id="start" class="button">Start</div>
+      <div id="stop" class="button">Stop</div>
+    </div>
+
+    <script src="node_modules/timer.js/src/timer.js"></script>
+    <script src="js/main.min.js"></script>
   </body>
+
 </html>

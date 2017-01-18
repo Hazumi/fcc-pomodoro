@@ -1,39 +1,54 @@
 const $timer = document.getElementById('timer');
 const $duration = document.getElementById('duration');
+const $break = document.getElementById('break');
+const start = document.getElementById('start');
+const stop = document.getElementById('stop');
+let duration = 1500;
+let breaktime = 300;
 
-let duration = document.getElementById('duration').value
-let paused = false;
+document.addEventListener('keydown', function(event) {
+  if (event.which === 13) {
+    duration = $duration.value * 60 || 1500;
+    breaktime = $break.value * 60 || 300;
+    pomodoro.stop().start(duration).on('end', function() {
+      $timer.innerHTML = "0:00";
+      this.start(breaktime).off('end'); 
+    });
+  }
+});
 
-duration = 4 * 60; // 4 minutes
-duration = 3;
+function millisToMinutesAndSeconds(millis) {
+  var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
 
 const pomodoro = new Timer({
-    tick: 1,
-    ontick: function (sec) {
-        $timer.innerHTML = Math.round(sec/1000);
-        console.log('interval', sec);
-    },
-    onstart: function() {
-        console.log('STARTING');
-    },
-    onpause: function() {
-        console.log('paused');
-    }
+  tick: 1,
+  ontick: function (sec) {
+    $timer.innerHTML = millisToMinutesAndSeconds(sec);
+  },
+  onstart: function() {
+    console.log('starting');
+  },
+  onstop: function() {
+    pomodoro.stop();
+    console.log('Stopping');
+  },
+  onend: function() {
+    //timer end normally
+  }
 });
 
-$timer.addEventListener('click', function() {
-    if (paused) {
-        pomodoro.start();
-        paused = false;
-    } else {
-        pomodoro.pause();
-        paused = true;
-    }
+start.addEventListener('click', function() {
+  pomodoro.start(duration);
 });
 
-// defining options using on
+stop.addEventListener('click', function() {
+  pomodoro.stop();
+});
+
+// options
 pomodoro.start(duration).on('end', function () {
-    //$timer.innerHTML = "0";
-    this.start(4).off('end');
+    this.start(breaktime).off('end');
 });
-
