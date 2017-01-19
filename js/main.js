@@ -5,7 +5,6 @@ const start = document.getElementById('start');
 const stop = document.getElementById('stop');
 let duration = 1500;
 let breaktime = 300;
-let pomoTime = true;
 
 function startTimer() {
   duration = $duration.value * 60 || 1500;
