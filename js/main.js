@@ -28,7 +28,7 @@ function millisToMinutesAndSeconds(millis) {
 
 const pomodoro = new Timer({
   tick: 1,
-  ontick: function (sec) {
+  ontick: function(sec) {
     $timer.innerHTML = millisToMinutesAndSeconds(sec);
   },
   onstart: function() {
